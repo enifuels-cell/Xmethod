@@ -2,13 +2,16 @@
 .env
 .env.*
 !.env.example
+.phpunit.result.cache
 .vscode/
 .DS_Store
 Thumbs.db
 
 # Dependencies and generated output
 node_modules/
-laravel-app/node_modules/
-laravel-app/vendor/
-laravel-app/public/build/
-laravel-app/public/storage/
+vendor/
+public/build/
+public/hot
+public/storage/
+storage/*.key
+storage/pail/
