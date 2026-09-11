@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Profile & Messages</title>
+<script>
+    const localHosts = ['localhost', '127.0.0.1', '[::1]'];
+    if (window.location.protocol === 'file:' || localHosts.includes(window.location.hostname)) {
+        window.location.replace('http://127.0.0.1:8000/messages');
+    }
+</script>
+<style>
+    @font-face {
+        font-family: 'Chirp';
+        src: url('Chirp Regular.woff') format('woff');
+        font-weight: 400;
+    }
+
+    @font-face {
+        font-family: 'Chirp';
+        src: url('Chirp Medium.woff') format('woff');
+        font-weight: 500;
+    }
+
+    @font-face {
+        font-family: 'Chirp';
+        src: url('Chirp Bold.woff') format('woff');
+        font-weight: 700;
+    }
+
+    @font-face {
+        font-family: 'Chirp';
+        src: url('Chirp Heavy.woff') format('woff');
+        font-weight: 800;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+        min-height: 100vh;
+        background: #000;
+        color: #fff;
+        font-family: 'Chirp', Arial, Helvetica, sans-serif;
+        font-size: 14px;
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    /* Top navigation */
+    .topbar {
+        height: 60px;
+        border-bottom: 1px solid #181818;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 30px;
+    }
+
+    .nav-left {
+        display: flex;
+        align-items: center;
+        gap: 30px;
+    }
+
+    .logo {
+        font-size: 24px;
+        font-weight: 700;
+        letter-spacing: -1px;
+    }
+
+    .nav-links {
+        display: flex;
+        gap: 25px;
+        color: #777;
+        font-size: 13px;
+        text-transform: uppercase;
+        letter-spacing: .7px;
+    }
+
+    .nav-links a:hover { color: #fff; }
+
+    .nav-right {
+        display: flex;
+        gap: 12px;
+    }
+
+    .nav-btn {
+        border: 1px solid #333;
+        background: #050505;
+        border-radius: 20px;
+        padding: 8px 16px;
+        color: #aaa;
+        font-size: 13px;
+        cursor: pointer;
+    }
+
+    /* Main layout */
+    .page {
+        min-height: calc(100vh - 60px);
+        padding: 40px 20px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .workspace {
+        width: min(1000px, 100%);
+        height: 640px;
+        display: grid;
+        grid-template-columns: 340px 1fr;
+        gap: 16px;
+    }
+
+    /* Profile card */
+    .profile {
+        border: 1px solid #242424;
+        border-radius: 12px;
+        padding: 24px;
+        background: #010101;
+    }
+
+    .cover-logo {
+        height: 80px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 10px;
+    }
+
+    .x-logo {
+        font-size: 56px;
+        font-weight: 200;
+        line-height: 1;
+        transform: rotate(-1deg);
+    }
+
+    .avatar {
+        width: 64px;
+        height: 64px;
+        border-radius: 50%;
+        border: 2px solid #333;
+        object-fit: cover;
+        margin: 0 0 14px;
+    }
+
+    .name {
+        font-size: 18px;
+        font-weight: 700;
+        margin-bottom: 4px;
+        display: flex;
+        align-items: center;
+        gap: 4px;
+    }
+
+    .verified {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 16px;
+        height: 16px;
+        border-radius: 50%;
+        background: #2585ff;
+        color: #fff;
+        font-size: 10px;
+    }
+
+    .handle {
+        color: #777;
+        font-size: 14px;
+        margin-bottom: 20px;
+    }
+
+    .bio {
+        color: #bcbcbc;
+        line-height: 1.5;
+        font-size: 13px;
+        margin-bottom: 24px;
+    }
+
+    .profile-row {
+        display: flex;
+        justify-content: space-between;
+        border-top: 1px solid #171717;
+        padding: 14px 0;
+        font-size: 13px;
+    }
+
+    .profile-row span:first-child { color: #666; }
+    .profile-row span:last-child { color: #bbb; }
+
+    /* Chat */
+    .chat {
+        border: 1px solid #242424;
+        border-radius: 12px;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        background: #010101;
+    }
+
+    .chat-header {
+        height: 64px;
+        border-bottom: 1px solid #1d1d1d;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 20px;
+    }
+
+    .contact {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+    }
+
+    .small-avatar {
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        border: 1px solid #333;
+        object-fit: cover;
+    }
+
+    .contact-name {
+        font-size: 14px;
+        font-weight: 700;
+    }
+
+    .contact-status {
+        color: #666;
+        font-size: 12px;
+        margin-top: 2px;
+    }
+
+    .header-icon {
+        color: #aaa;
+        font-size: 16px;
+        cursor: pointer;
+    }
+
+    .messages {
+        flex: 1;
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 0;
+    }
+
+    .empty-state {
+        text-align: center;
+        color: #666;
+    }
+
+    .mail-icon {
+        width: 48px;
+        height: 48px;
+        border-radius: 50%;
+        background: #147de0;
+        margin: 0 auto 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #fff;
+        font-size: 22px;
+        box-shadow: 0 0 18px rgba(20,125,224,.12);
+    }
+
+    .empty-title {
+        color: #ddd;
+        font-size: 16px;
+        font-weight: 700;
+        margin-bottom: 6px;
+    }
+
+    .empty-text {
+        font-size: 13px;
+        color: #777;
+        line-height: 1.4;
+    }
+
+    .composer {
+        height: 52px;
+        margin: 0 16px 16px;
+        border: 1px solid #202020;
+        background: #080808;
+        border-radius: 26px;
+        display: flex;
+        align-items: center;
+        padding: 0 14px;
+        gap: 12px;
+    }
+
+    .plus {
+        width: 28px;
+        height: 28px;
+        border: 1px solid #333;
+        border-radius: 50%;
+        color: #aaa;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 16px;
+        cursor: pointer;
+    }
+
+    .message-input {
+        flex: 1;
+        color: #555;
+        font-size: 14px;
+    }
+
+    .send {
+        color: #555;
+        font-size: 16px;
+        cursor: pointer;
+    }
+
+    /* Mobile */
+    @media (max-width: 768px) {
+        .topbar {
+            padding: 0 16px;
+        }
+
+        .nav-links {
+            display: none;
+        }
+
+        .workspace {
+            height: auto;
+            grid-template-columns: 1fr;
+        }
+
+        .chat {
+            height: 500px;
+        }
+    }
+</style>
+</head>
+
+<body>
+
+<header class="topbar">
+    <div class="nav-left">
+        <div class="logo">X</div>
+
+        <nav class="nav-links">
+            <a href="#">Help Center</a>
+            <a href="#">Account</a>
+            <a href="#">Safety</a>
+            <a href="#">Contact</a>
+        </nav>
+    </div>
+
+    <div class="nav-right">
+        <button class="nav-btn" type="button">🌐 English</button>
+        <button class="nav-btn" type="button">Sign In</button>
+    </div>
+</header>
+
+<main class="page">
+    <section class="workspace">
+
+        <aside class="profile">
+            <div class="cover-logo">
+                <div class="x-logo">X</div>
+            </div>
+
+            <img
+                class="avatar"
+                src="https://media.licdn.com/dms/image/v2/D4D03AQGt2qMWzmts7g/profile-displayphoto-shrink_200_200/profile-displayphoto-shrink_200_200/0/1706214642287?e=2147483647&amp;v=beta&amp;t=50UjwQxzaY6b31PQJTl7_8gnuFO0Dg3oy-kTQS4B8i4"
+                alt="Mahdi Nawaz profile"
+            >
+
+            <div class="name">
+                Mahdi Nawaz
+                <span class="verified">✓</span>
+            </div>
+
+            <div class="handle">@MahdiNawaz</div>
+
+            <p class="bio">
+                Senior Associate | LegalTech | Cyber &amp; Security
+                <br>
+                Legal Representative / Corporate Law
+            </p>
+
+            <div class="profile-row">
+                <span>Location</span>
+                <span>United States</span>
+            </div>
+
+            <div class="profile-row">
+                <span>Case</span>
+                <span>#FMPPT-584879</span>
+            </div>
+
+            <div class="profile-row">
+                <span>Category</span>
+                <span>Account Security</span>
+            </div>
+        </aside>
+
+        <section class="chat">
+            <div class="chat-header">
+                <div class="contact">
+                    <img
+                        class="small-avatar"
+                        src="https://media.licdn.com/dms/image/v2/D4D03AQGt2qMWzmts7g/profile-displayphoto-shrink_200_200/profile-displayphoto-shrink_200_200/0/1706214642287?e=2147483647&amp;v=beta&amp;t=50UjwQxzaY6b31PQJTl7_8gnuFO0Dg3oy-kTQS4B8i4"
+                        alt="Mahdi Nawaz profile"
+                    >
+                    <div>
+                        <div class="contact-name">Mahdi Nawaz ✓</div>
+                        <div class="contact-status">Safety &amp; Security</div>
+                    </div>
+                </div>
+
+                <div class="header-icon">▣</div>
+            </div>
+
+            <div class="messages">
+                <div class="empty-state">
+                    <div class="mail-icon">✉</div>
+                    <div class="empty-title">Start a conversation</div>
+                    <div class="empty-text">
+                        Send a message to begin your<br>
+                        support request.
+                    </div>
+                </div>
+            </div>
+
+            <div class="composer">
+                <div class="plus">+</div>
+                <div class="message-input">Message</div>
+                <div class="send">➤</div>
+            </div>
+        </section>
+
+    </section>
+</main>
+
+</body>
+</html>

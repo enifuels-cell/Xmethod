@@ -1,0 +1,14 @@
+# Local environment and editor files
+.env
+.env.*
+!.env.example
+.vscode/
+.DS_Store
+Thumbs.db
+
+# Dependencies and generated output
+node_modules/
+laravel-app/node_modules/
+laravel-app/vendor/
+laravel-app/public/build/
+laravel-app/public/storage/

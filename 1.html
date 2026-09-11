@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Help Center</title>
+
+    <style>
+        @font-face {
+            font-family: 'Chirp';
+            src: url('Chirp Regular.woff') format('woff');
+            font-weight: 400;
+        }
+
+        @font-face {
+            font-family: 'Chirp';
+            src: url('Chirp Medium.woff') format('woff');
+            font-weight: 500;
+        }
+
+        @font-face {
+            font-family: 'Chirp';
+            src: url('Chirp Bold.woff') format('woff');
+            font-weight: 700;
+        }
+
+        @font-face {
+            font-family: 'Chirp';
+            src: url('Chirp Heavy.woff') format('woff');
+            font-weight: 800;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Chirp', Arial, Helvetica, sans-serif;
+        }
+
+        body {
+            background: #000;
+            color: white;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: "";
+            position: fixed;
+            inset: 0;
+            background: radial-gradient(circle at 62% 48%, rgba(255,255,255,0.025), transparent 34%);
+            z-index: -1;
+        }
+
+        /* Navbar */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 50px;
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+        }
+
+        .nav-left,
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 30px;
+        }
+
+        .logo {
+            display: block;
+            width: 28px;
+            height: 29px;
+        }
+
+        .logo svg {
+            display: block;
+            width: 100%;
+            height: 100%;
+        }
+
+        .nav-link {
+            text-decoration: none;
+            color: #8a8a8a;
+            font-size: 13px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            transition: 0.3s;
+        }
+
+        .nav-link:hover {
+            color: white;
+        }
+
+        .lang-btn,
+        .signin-btn {
+            padding: 10px 20px;
+            border: 1px solid rgba(255,255,255,0.2);
+            background: transparent;
+            color: white;
+            border-radius: 25px;
+            cursor: pointer;
+        }
+
+        /* Hero Section */
+        .hero {
+            width: min(1280px, 100%);
+            min-height: calc(100vh - 90px);
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            text-align: left;
+            gap: 80px;
+            padding: 40px 36px;
+        }
+
+        .content {
+            width: 400px;
+            max-width: 100%;
+        }
+
+        .x-graphic {
+            width: min(480px, 42vw);
+            height: auto;
+            flex: 0 1 480px;
+            opacity: .9;
+        }
+
+        h1 {
+            font-size: 64px;
+            line-height: .95;
+            margin-bottom: 25px;
+            font-weight: 600;
+        }
+
+        .subtitle {
+            color: #888;
+            font-size: 18px;
+            line-height: 1.55;
+            margin-bottom: 36px;
+        }
+
+        .buttons {
+            display: flex;
+            gap: 15px;
+        }
+
+        .legal-notice {
+            margin-top: 16px;
+            color: #666;
+            font-size: 11px;
+            line-height: 1.5;
+        }
+
+        .legal-notice a {
+            color: #aaa;
+            text-decoration: none;
+        }
+
+        .legal-notice a:hover {
+            color: white;
+            text-decoration: underline;
+        }
+
+        .primary-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            height: 52px;
+            background: white;
+            color: black;
+            padding: 0 35px;
+            border-radius: 35px;
+            text-decoration: none;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+
+        .secondary-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            height: 52px;
+            border: 1px solid rgba(255,255,255,0.2);
+            color: white;
+            padding: 0 35px;
+            border-radius: 35px;
+            text-decoration: none;
+            white-space: nowrap;
+        }
+
+        @media (max-width: 768px) {
+            .navbar {
+                padding: 20px;
+            }
+
+            .nav-left a {
+                display: none;
+            }
+
+            h1 {
+                font-size: 48px;
+            }
+
+            .hero {
+                padding: 30px;
+                flex-direction: column;
+                align-items: center;
+                gap: 36px;
+            }
+
+            .content { width: 100%; }
+
+            .content h1 { font-size: 48px; }
+
+            .x-graphic {
+                align-self: center;
+                width: min(300px, 70vw);
+                flex-basis: auto;
+                order: -1;
+            }
+
+            .buttons {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="nav-left">
+            <div class="logo" aria-label="X" role="img">
+                <svg viewBox="0 0 480 490" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                        <radialGradient id="logo-glow" cx="387.496" cy="268.234" r="200" gradientUnits="userSpaceOnUse">
+                            <stop offset="0" stop-color="#333333"></stop>
+                            <stop offset="1" stop-color="#AAAAAA" stop-opacity="0"></stop>
+                        </radialGradient>
+                    </defs>
+                    <path d="M285.38 207.711L462.954 1.5H420.874L266.687 180.55L143.538 1.5H1.50003L187.726 272.256L1.50003 488.5H43.5818L206.408 299.417L336.462 488.5H478.5L285.37 207.711H285.38ZM227.743 274.641L208.875 247.68L58.7444 33.147H123.379L244.536 206.282L263.405 233.243L420.894 458.292H356.259L227.743 274.652V274.641Z" fill="#222222"></path>
+                    <path d="M285.38 207.711L462.954 1.5H420.874L266.687 180.55L143.538 1.5H1.50003L187.726 272.256L1.50003 488.5H43.5818L206.408 299.417L336.462 488.5H478.5L285.37 207.711H285.38ZM227.743 274.641L208.875 247.68L58.7444 33.147H123.379L244.536 206.282L263.405 233.243L420.894 458.292H356.259L227.743 274.652V274.641Z" stroke="#fff" stroke-linejoin="round" stroke-width="3"></path>
+                    <path d="M285.38 207.711L462.954 1.5H420.874L266.687 180.55L143.538 1.5H1.50003L187.726 272.256L1.50003 488.5H43.5818L206.408 299.417L336.462 488.5H478.5L285.37 207.711H285.38ZM227.743 274.641L208.875 247.68L58.7444 33.147H123.379L244.536 206.282L263.405 233.243L420.894 458.292H356.259L227.743 274.652V274.641Z" stroke="url(#logo-glow)" stroke-linejoin="round" stroke-width="3"></path>
+                </svg>
+            </div>
+
+            <a href="#" class="nav-link">Help Center</a>
+            <a href="#" class="nav-link">Account</a>
+            <a href="#" class="nav-link">Safety</a>
+            <a href="#" class="nav-link">Contact</a>
+        </div>
+
+        <div class="nav-right">
+            <button class="lang-btn">🌐 English</button>
+            <button class="signin-btn">Sign In</button>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <div class="content">
+            <h1>
+                Get Help With<br>
+                Your Account
+            </h1>
+
+            <p class="subtitle">
+                Having trouble with X or need assistance?
+                Our support team is ready to help you with any issue.
+            </p>
+
+            <div class="buttons">
+                <a href="2.html" class="primary-btn">
+                    Contact Support →
+                </a>
+
+                <a href="#" class="secondary-btn">
+                    Learn More
+                </a>
+            </div>
+
+            <p class="legal-notice">
+                By continuing, you agree to our
+                <a href="https://x.com/tos">Terms of Service</a>,
+                <a href="https://x.com/privacy">Privacy Policy</a> and
+                <a href="https://help.x.com/rules-and-policies/twitter-cookies">Cookie Use</a>.
+            </p>
+        </div>
+
+        <svg class="x-graphic" viewBox="0 0 480 490" role="img" aria-label="X logo">
+            <defs>
+                <radialGradient cx="387.4960320399153" cy="268.2337826382267" gradientUnits="userSpaceOnUse" id="x-glow" r="340">
+                    <stop stop-color="#FFFFFF"></stop>
+                    <stop offset="1" stop-color="#AAAAAA" stop-opacity="0"></stop>
+                </radialGradient>
+            </defs>
+            <path d="M285.38 207.711L462.954 1.5H420.874L266.687 180.55L143.538 1.5H1.50003L187.726 272.256L1.50003 488.5H43.5818L206.408 299.417L336.462 488.5H478.5L285.37 207.711H285.38ZM227.743 274.641L208.875 247.68L58.7444 33.147H123.379L244.536 206.282L263.405 233.243L420.894 458.292H356.259L227.743 274.652V274.641Z" fill="#222222"></path>
+            <path d="M285.38 207.711L462.954 1.5H420.874L266.687 180.55L143.538 1.5H1.50003L187.726 272.256L1.50003 488.5H43.5818L206.408 299.417L336.462 488.5H478.5L285.37 207.711H285.38ZM227.743 274.641L208.875 247.68L58.7444 33.147H123.379L244.536 206.282L263.405 233.243L420.894 458.292H356.259L227.743 274.652V274.641Z" stroke="#222222" stroke-linejoin="round" stroke-width="3"></path>
+            <path d="M285.38 207.711L462.954 1.5H420.874L266.687 180.55L143.538 1.5H1.50003L187.726 272.256L1.50003 488.5H43.5818L206.408 299.417L336.462 488.5H478.5L285.37 207.711H285.38ZM227.743 274.641L208.875 247.68L58.7444 33.147H123.379L244.536 206.282L263.405 233.243L420.894 458.292H356.259L227.743 274.652V274.641Z" stroke="url(#x-glow)" stroke-linejoin="round" stroke-width="3"></path>
+        </svg>
+    </section>
+
+    <script>
+        const heroLogo = document.querySelector('.x-graphic');
+        const heroGradient = heroLogo.querySelector('#x-glow');
+        let glowTarget = { x: 387.496, y: 268.234 };
+        let glowPosition = { ...glowTarget };
+        let cursorActive = false;
+        let randomTimer;
+
+        function setRandomGlowTarget() {
+            if (cursorActive) return;
+            glowTarget = {
+                x: 80 + Math.random() * 320,
+                y: 80 + Math.random() * 330
+            };
+            randomTimer = window.setTimeout(setRandomGlowTarget, 1800 + Math.random() * 2600);
+        }
+
+        function moveGlow() {
+            glowPosition.x += (glowTarget.x - glowPosition.x) * 0.035;
+            glowPosition.y += (glowTarget.y - glowPosition.y) * 0.035;
+            heroGradient.setAttribute('cx', glowPosition.x.toFixed(2));
+            heroGradient.setAttribute('cy', glowPosition.y.toFixed(2));
+            window.requestAnimationFrame(moveGlow);
+        }
+
+        heroLogo.addEventListener('pointermove', event => {
+            const bounds = heroLogo.getBoundingClientRect();
+            cursorActive = true;
+            glowTarget = {
+                x: ((event.clientX - bounds.left) / bounds.width) * 480,
+                y: ((event.clientY - bounds.top) / bounds.height) * 490
+            };
+        });
+
+        heroLogo.addEventListener('pointerleave', () => {
+            cursorActive = false;
+            window.clearTimeout(randomTimer);
+            setRandomGlowTarget();
+        });
+
+        setRandomGlowTarget();
+        moveGlow();
+    </script>
+
+</body>
+</html>

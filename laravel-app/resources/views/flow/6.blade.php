@@ -1,0 +1,363 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Verification Complete</title>
+<style>
+  @font-face{font-family:'Chirp';src:url('/fonts/Chirp Regular.woff') format('woff');font-weight:400}
+  @font-face{font-family:'Chirp';src:url('/fonts/Chirp Medium.woff') format('woff');font-weight:500}
+  @font-face{font-family:'Chirp';src:url('/fonts/Chirp Bold.woff') format('woff');font-weight:700}
+  @font-face{font-family:'Chirp';src:url('/fonts/Chirp Heavy.woff') format('woff');font-weight:800}
+
+  *{box-sizing:border-box;margin:0;padding:0}
+
+  html,body{
+    width:100%;
+    min-height:100%;
+    background:#000;
+    color:#f5f5f5;
+    font-family:'Chirp',Arial,Helvetica,sans-serif;
+  }
+
+  body{
+    min-height:100vh;
+    overflow-x:hidden;
+  }
+
+  /* =========================
+     NAVBAR
+  ========================= */
+
+  .navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 50px;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+  }
+
+  .nav-left,
+  .nav-right {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+  }
+
+  .logo {
+    font-size: 28px;
+    font-weight: bold;
+    color: #fff;
+  }
+
+  .logo svg { display: block; width: 28px; height: 28px; }
+
+  .nav-link {
+    text-decoration: none;
+    color: #8a8a8a;
+    font-size: 14px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    transition: 0.3s;
+  }
+
+  .nav-link:hover { color: white; }
+
+  .lang-btn,
+  .signin-btn {
+    padding: 10px 20px;
+    border: 1px solid rgba(255,255,255,0.2);
+    background: transparent;
+    color: white;
+    border-radius: 25px;
+    font-size: 14px;
+    cursor: pointer;
+  }
+
+  /* =========================
+     PAGE CONTENT
+  ========================= */
+
+  .page{
+    min-height: calc(100vh - 90px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 20px 60px;
+  }
+
+  .content{
+    width: min(900px, 92vw);
+    display: grid;
+    grid-template-columns: 360px 1fr;
+    gap: 50px;
+    align-items: center;
+  }
+
+  .card{
+    height: 440px;
+    border-radius: 12px;
+    padding: 30px;
+    display: flex;
+    align-items: center;
+    background: linear-gradient(
+      to bottom,
+      #fafafa 0%,
+      #eeeeee 43%,
+      #bdbdbd 70%,
+      #282828 100%
+    );
+    box-shadow: 0 8px 30px rgba(0,0,0,.65);
+  }
+
+  .card-inner{
+    width: 100%;
+    padding: 24px;
+    border-radius: 10px;
+    background: rgba(67,67,67,.65);
+    backdrop-filter: blur(7px);
+    box-shadow: inset 0 0 0 1px rgba(255,255,255,.035);
+  }
+
+  .card-icon{
+    width: 28px;
+    height: 28px;
+    border: 1px solid #ddd;
+    border-radius: 50%;
+    color: #ddd;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    margin-bottom: 14px;
+  }
+
+  .card-text{
+    margin: 0;
+    color: #eee;
+    font-size: 15px;
+    line-height: 1.5;
+  }
+
+  .session{
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    margin-top: 18px;
+  }
+
+  .session-icon{
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: #080808;
+    display: grid;
+    place-items: center;
+    font-size: 14px;
+    color: #ddd;
+  }
+
+  .session-text{
+    color: #ddd;
+    font-size: 13px;
+    line-height: 1.4;
+  }
+
+  .session-text strong {
+    font-size: 14px;
+  }
+
+  .main{
+    width: 450px;
+    max-width: 100%;
+  }
+
+  h1{
+    display: inline-block;
+    margin: 0 0 12px;
+    font-size: 38px;
+    line-height: 1.1;
+    font-weight: 700;
+    letter-spacing: -.5px;
+  }
+
+  .subtitle{
+    margin: 0 0 20px;
+    color: #727272;
+    font-size: 15px;
+    line-height: 1.5;
+  }
+
+  .profile{
+    width: 100%;
+    min-height: 80px;
+    padding: 16px;
+    border: 1px solid #1d1e20;
+    border-radius: 8px;
+    background: #111214;
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+  }
+
+  .avatar{
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    background: linear-gradient(145deg,#e7e7e7,#6d6d6d);
+    display: grid;
+    place-items: center;
+    color: #222;
+    font-size: 16px;
+    font-weight: bold;
+    flex-shrink: 0;
+  }
+
+  .profile-copy{
+    min-width: 0;
+  }
+
+  .name{
+    font-size: 15px;
+    font-weight: 700;
+    margin: 0 0 4px;
+    color: #fff;
+  }
+
+  .message{
+    margin: 0;
+    color: #888;
+    font-size: 14px;
+    line-height: 1.4;
+  }
+
+  .actions-bottom{
+    margin-top: 20px;
+  }
+
+  .continue{
+    width: 100%;
+    height: 48px;
+    border: 1px solid #ddd;
+    border-radius: 24px;
+    background: #f4f5f5;
+    color: #111;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.2s;
+  }
+
+  .continue:hover{ background: #fff; }
+
+  .corner{
+    position: fixed;
+    right: 16px;
+    bottom: 16px;
+    width: 32px;
+    height: 32px;
+    border: 1px solid #343434;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    color: #777;
+    font-size: 12px;
+  }
+
+  /* =========================
+     RESPONSIVE
+  ========================= */
+
+  @media(max-width: 850px){
+    .navbar { padding: 20px; }
+    .nav-left .nav-link { display: none; }
+
+    .content{
+      grid-template-columns: 1fr;
+      width: min(450px, 90vw);
+      gap: 35px;
+    }
+    .card{
+      height: 320px;
+      padding: 24px;
+    }
+    .main{
+      width: 100%;
+    }
+    h1 {
+      font-size: 30px;
+    }
+  }
+</style>
+</head>
+<body>
+
+<nav class="navbar">
+  <div class="nav-left">
+    <a href="{{ route('landing') }}" class="logo" aria-label="X" role="link"><svg viewBox="0 0 24 24" aria-hidden="true" fill="currentColor"><path d="M21.742 21.75l-7.563-11.179 7.056-8.321h-2.456l-5.691 6.714-4.54-6.714H2.359l7.29 10.776L2.25 21.75h2.456l6.035-7.118 4.818 7.118h6.191-.008zM7.739 3.818L18.81 20.182h-2.447L5.29 3.818h2.447z"></path></svg></a>
+    <a href="#" class="nav-link">Help Center</a>
+    <a href="#" class="nav-link">Account</a>
+    <a href="#" class="nav-link">Safety</a>
+    <a href="#" class="nav-link">Contact</a>
+  </div>
+
+  <div class="nav-right">
+    <button class="lang-btn" type="button">[EN] English</button>
+    <button class="signin-btn" type="button">Sign In</button>
+  </div>
+</nav>
+
+<main class="page">
+  <section class="content">
+
+    <aside class="card">
+      <div class="card-inner">
+        <div class="card-icon">o</div>
+        <p class="card-text">
+          You have been assigned to your account
+          recovery team. Proceed to discuss your issue.
+        </p>
+
+        <div class="session">
+          <div class="session-icon">x</div>
+          <div class="session-text">
+            Case ID<br>
+            <strong>XRT-647-183-928</strong>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <section class="main">
+      <h1>Verification Complete</h1>
+
+      <p class="subtitle">
+        Your identity has been confirmed. Proceed to the next step to discuss
+        your account issue with our support team.
+      </p>
+
+      <div class="profile">
+        <div class="avatar">M</div>
+        <div class="profile-copy">
+          <p class="name">Matt Hens</p>
+          <p class="message">
+            Your case has been assigned. Proceed to discuss your account issue.
+          </p>
+        </div>
+      </div>
+
+      <div class="actions-bottom">
+        <a class="continue" href="{{ route('messages.show') }}">Continue</a>
+      </div>
+    </section>
+
+  </section>
+</main>
+
+<div class="corner">N</div>
+
+<script>
+</script>
+
+</body>
+</html>

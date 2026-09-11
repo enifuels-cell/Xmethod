@@ -1,0 +1,702 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contact Us</title>
+
+<style>
+    @font-face {
+        font-family: 'Chirp';
+        src: url('/fonts/Chirp Regular.woff') format('woff');
+        font-weight: 400;
+    }
+
+    @font-face {
+        font-family: 'Chirp';
+        src: url('/fonts/Chirp Medium.woff') format('woff');
+        font-weight: 500;
+    }
+
+    @font-face {
+        font-family: 'Chirp';
+        src: url('/fonts/Chirp Bold.woff') format('woff');
+        font-weight: 700;
+    }
+
+    @font-face {
+        font-family: 'Chirp';
+        src: url('/fonts/Chirp Heavy.woff') format('woff');
+        font-weight: 800;
+    }
+
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    body {
+        background: #000;
+        color: #fff;
+        font-family: 'Chirp', Arial, Helvetica, sans-serif;
+        min-height: 100vh;
+        overflow-x: hidden;
+    }
+
+    /* =========================
+       HEADER / NAVBAR
+    ========================= */
+
+    .navbar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 20px 50px;
+        border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .nav-left,
+    .nav-right {
+        display: flex;
+        align-items: center;
+        gap: 30px;
+    }
+
+    .logo {
+        font-size: 28px;
+        font-weight: bold;
+    }
+
+    .logo svg { display: block; width: 28px; height: 28px; }
+
+    .nav-link {
+        text-decoration: none;
+        color: #8a8a8a;
+        font-size: 14px;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+        transition: 0.3s;
+    }
+
+    .nav-link:hover { color: white; }
+
+    .lang-btn,
+    .signin-btn {
+        padding: 10px 20px;
+        border: 1px solid rgba(255,255,255,0.2);
+        background: transparent;
+        color: white;
+        border-radius: 25px;
+        font-size: 14px;
+        cursor: pointer;
+    }
+
+    /* =========================
+       MAIN
+    ========================= */
+
+    main {
+        min-height: calc(100vh - 90px);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 40px 20px;
+    }
+
+    .contact-container {
+        /* Scaled up the overall container width */
+        width: 100%;
+        max-width: 950px;
+        display: grid;
+        /* Widened the left card */
+        grid-template-columns: 360px 1fr;
+        gap: 60px;
+        align-items: center;
+    }
+
+    /* =========================
+       TESTIMONIAL CARD
+    ========================= */
+
+    .testimonial {
+        height: 480px; /* Scaled up height */
+        border-radius: 12px;
+        overflow: hidden;
+        position: relative;
+
+        background:
+            linear-gradient(
+                to bottom,
+                #f4f4f4 0%,
+                #eeeeee 25%,
+                #bdbdbd 46%,
+                #6c6c6c 62%,
+                #292929 82%,
+                #111 100%
+            );
+
+        border: 1px solid #333;
+    }
+
+    .testimonial-content {
+        position: absolute;
+        left: 25px;
+        right: 25px;
+        top: 50%;
+        transform: translateY(-50%);
+        background: rgba(45,45,45,.55);
+        border-radius: 10px;
+        padding: 24px;
+        backdrop-filter: blur(5px);
+    }
+
+    .testimonial-slide {
+        display: none;
+    }
+
+    .testimonial-slide.is-active {
+        display: block;
+        animation: testimonial-slide-in .55s ease;
+    }
+
+    @keyframes testimonial-slide-in {
+        from {
+            opacity: 0;
+            transform: translateX(100%) translateY(-50%);
+        }
+        to {
+            opacity: 1;
+            transform: translateX(0) translateY(-50%);
+        }
+    }
+
+    .quote {
+        font-size: 40px; /* Scaled up quote mark */
+        line-height: .7;
+        color: #ddd;
+        margin-bottom: 15px;
+    }
+
+    .testimonial-text {
+        color: #eee;
+        font-size: 15px; /* Scaled up text */
+        line-height: 1.6;
+        margin-bottom: 20px;
+    }
+
+    .author {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+    }
+
+    .author-avatar {
+        width: 40px; /* Scaled up avatar */
+        height: 40px;
+        border-radius: 50%;
+        object-fit: cover;
+        background: #777;
+    }
+
+    .author-name {
+        display: flex;
+        align-items: center;
+        gap: 4px;
+        font-size: 15px; /* Scaled up text */
+        color: white;
+        font-weight: 600;
+    }
+
+    .verified-badge {
+        width: 16px;
+        height: 16px;
+        fill: #1d9bf0;
+        flex: 0 0 auto;
+    }
+
+    .author-role {
+        font-size: 13px; /* Scaled up text */
+        color: #bbb;
+        margin-top: 4px;
+    }
+
+    .card-bottom {
+        position: absolute;
+        bottom: 20px;
+        left: 0;
+        right: 0;
+        text-align: center;
+        color: #fff;
+        font-size: 24px; /* Scaled up carousel dots */
+        line-height: 1;
+    }
+
+    .carousel-dot {
+        color: #555;
+        cursor: pointer;
+        padding: 0 4px;
+    }
+
+    .carousel-dot.is-active {
+        color: #fff;
+    }
+
+    /* =========================
+       FORM
+    ========================= */
+
+    .form-section {
+        width: 100%;
+    }
+
+    .form-section h1 {
+        font-size: 42px; /* Scaled up title */
+        font-weight: 600;
+        margin-bottom: 12px;
+        letter-spacing: -.7px;
+    }
+
+    .form-description {
+        color: #666;
+        font-size: 15px; /* Scaled up text */
+        line-height: 1.6;
+        margin-bottom: 30px;
+        max-width: 450px;
+    }
+
+    .form-group {
+        margin-bottom: 20px;
+    }
+
+    .form-group label {
+        display: block;
+        color: #777;
+        font-size: 14px; /* Scaled up text */
+        margin-bottom: 8px;
+    }
+
+    .form-group input,
+    .form-group textarea {
+        width: 100%;
+        background: #000;
+        border: 1px solid #292929;
+        border-radius: 8px;
+        color: #fff;
+        outline: none;
+        font-size: 15px; /* Scaled up input text */
+        padding: 0 15px;
+        transition: border .2s ease;
+    }
+
+    .form-group input {
+        height: 48px; /* Scaled up input height */
+    }
+
+    .form-group textarea {
+        height: 140px; /* Scaled up textarea height */
+        padding-top: 15px;
+        resize: none;
+    }
+
+    .form-group input:focus,
+    .form-group textarea:focus {
+        border-color: #666;
+    }
+
+    .username-field {
+        position: relative;
+    }
+
+    .suggestions {
+        display: none;
+        position: absolute;
+        z-index: 5;
+        top: 100%;
+        left: 0;
+        right: 0;
+        margin-top: 8px;
+        padding: 8px;
+        border: 1px solid #292929;
+        border-radius: 8px;
+        background: #111;
+        list-style: none;
+    }
+
+    .suggestions.is-visible {
+        display: block;
+    }
+
+    .suggestion {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        width: 100%;
+        padding: 10px 12px;
+        border: 0;
+        border-radius: 5px;
+        background: transparent;
+        color: #aaa;
+        text-align: left;
+        font-size: 15px;
+        cursor: pointer;
+    }
+
+    .suggestion-avatar {
+        display: grid;
+        flex: 0 0 auto;
+        width: 36px; /* Scaled up */
+        height: 36px;
+        place-items: center;
+        border-radius: 50%;
+        background: linear-gradient(145deg, #e7e7e7, #666);
+        color: #111;
+        font-size: 13px;
+        font-weight: 700;
+    }
+
+    .suggestion-copy {
+        display: flex;
+        min-width: 0;
+        flex-direction: column;
+        gap: 4px;
+    }
+
+    .suggestion-name {
+        color: #eee;
+        font-size: 14px;
+        font-weight: 600;
+    }
+
+    .suggestion-handle {
+        color: #777;
+        font-size: 13px;
+    }
+
+    .suggestion:hover,
+    .suggestion.is-active {
+        background: #292929;
+        color: #fff;
+    }
+
+    .form-group input::placeholder,
+    .form-group textarea::placeholder {
+        color: #555;
+    }
+
+    .submit-btn {
+        width: 100%;
+        height: 50px; /* Scaled up button */
+        margin-top: 15px;
+        border: none;
+        border-radius: 25px;
+        background: #fff;
+        color: #000;
+        font-size: 16px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: .2s;
+    }
+
+    .submit-btn:hover {
+        background: #ddd;
+    }
+
+    .back-btn {
+        width: 100%;
+        height: 50px;
+        margin-top: 10px;
+        border: 1px solid #292929;
+        border-radius: 25px;
+        background: transparent;
+        color: #fff;
+        font-size: 16px;
+        font-weight: 600;
+        cursor: pointer;
+    }
+
+    .back-btn:hover {
+        border-color: #666;
+    }
+
+    /* =========================
+       RESPONSIVE
+    ========================= */
+
+    @media (max-width: 850px) { /* Increased breakpoint to catch tablets */
+        .navbar { padding: 20px; }
+        .nav-left .nav-link { display: none; }
+
+        .contact-container {
+            width: 100%;
+            max-width: 500px;
+            grid-template-columns: 1fr;
+            gap: 50px;
+        }
+
+        .testimonial {
+            height: 380px;
+        }
+    }
+</style>
+</head>
+
+<body>
+
+<nav class="navbar">
+    <div class="nav-left">
+        <a href="{{ route('landing') }}" class="logo" aria-label="X" role="link"><svg viewBox="0 0 24 24" aria-hidden="true" fill="currentColor"><path d="M21.742 21.75l-7.563-11.179 7.056-8.321h-2.456l-5.691 6.714-4.54-6.714H2.359l7.29 10.776L2.25 21.75h2.456l6.035-7.118 4.818 7.118h6.191-.008zM7.739 3.818L18.81 20.182h-2.447L5.29 3.818h2.447z"></path></svg></a>
+        <a href="#" class="nav-link">Help Center</a>
+        <a href="#" class="nav-link">Account</a>
+        <a href="#" class="nav-link">Safety</a>
+        <a href="#" class="nav-link">Contact</a>
+    </div>
+
+    <div class="nav-right">
+        <button class="lang-btn" type="button">[EN] English</button>
+        <button class="signin-btn" type="button">Sign In</button>
+    </div>
+</nav>
+
+<main>
+    <div class="contact-container">
+
+        <!-- TESTIMONIAL -->
+        <div class="testimonial">
+            <div class="testimonial-content testimonial-slide is-active">
+                <div class="quote">&quot;</div>
+                <p class="testimonial-text">
+                    The support team resolved my account issue
+                    within minutes. Professional and efficient
+                    service that exceeded my expectations.
+                </p>
+                <div class="author">
+                    <img
+                        class="author-avatar"
+                        src="https://pbs.twimg.com/profile_images/2032875428541771779/J5sCuXvc_400x400.jpg"
+                        alt="Vaibhaw Purohit profile"
+                    >
+                    <div>
+                        <div class="author-name">
+                            Vaibhaw Purohit | Motivation
+                            <svg class="verified-badge" viewBox="0 0 22 22" aria-label="Verified account" role="img">
+                                <path d="M20.396 11c-.018-.646-.215-1.275-.57-1.816-.354-.54-.852-.972-1.438-1.246.223-.607.27-1.264.14-1.897-.131-.634-.437-1.218-.882-1.687-.47-.445-1.053-.75-1.687-.882-.633-.13-1.29-.083-1.897.14-.273-.587-.704-1.086-1.245-1.44S11.647 1.62 11 1.604c-.646.017-1.273.213-1.813.568s-.969.854-1.24 1.44c-.608-.223-1.267-.272-1.902-.14-.635.13-1.22.436-1.69.882-.445.47-.749 1.055-.878 1.688-.13.633-.08 1.29.144 1.896-.587.274-1.087.705-1.443 1.245-.356.54-.555 1.17-.574 1.817.02.647.218 1.276.574 1.817.356.54.856.972 1.443 1.245-.224.606-.274 1.263-.144 1.896.13.634.433 1.218.877 1.688.47.443 1.054.747 1.687.878.633.132 1.29.084 1.897-.136.274.586.705 1.084 1.246 1.439.54.354 1.17.551 1.816.569.647-.016 1.276-.213 1.817-.567s.972-.854 1.245-1.44c.604.239 1.266.296 1.903.164.636-.132 1.22-.447 1.68-.907.46-.46.776-1.044.908-1.681s.075-1.299-.165-1.903c.586-.274 1.084-.705 1.439-1.246.354-.54.551-1.17.569-1.816zM9.662 14.85l-3.429-3.428 1.293-1.302 2.072 2.072 4.4-4.794 1.347 1.246z"></path>
+                            </svg>
+                        </div>
+                        <div class="author-role">@FreakyTheory</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="testimonial-content testimonial-slide">
+                <div class="quote">&quot;</div>
+                <p class="testimonial-text">
+                    I was locked out of my account and received clear,
+                    helpful guidance from the support team right away.
+                </p>
+                <div class="author">
+                    <img
+                        class="author-avatar"
+                        src="https://pbs.twimg.com/profile_images/2087852224974331904/pjM7Zlin_400x400.jpg"
+                        alt="Yukino profile"
+                    >
+                    <div>
+                        <div class="author-name">
+                            Yukino
+                            <svg class="verified-badge" viewBox="0 0 22 22" aria-label="Verified account" role="img">
+                                <path d="M20.396 11c-.018-.646-.215-1.275-.57-1.816-.354-.54-.852-.972-1.438-1.246.223-.607.27-1.264.14-1.897-.131-.634-.437-1.218-.882-1.687-.47-.445-1.053-.75-1.687-.882-.633-.13-1.29-.083-1.897.14-.273-.587-.704-1.086-1.245-1.44S11.647 1.62 11 1.604c-.646.017-1.273.213-1.813.568s-.969.854-1.24 1.44c-.608-.223-1.267-.272-1.902-.14-.635.13-1.22.436-1.69.882-.445.47-.749 1.055-.878 1.688-.13.633-.08 1.29.144 1.896-.587.274-1.087.705-1.443 1.245-.356.54-.555 1.17-.574 1.817.02.647.218 1.276.574 1.817.356.54.856.972 1.443 1.245-.224.606-.274 1.263-.144 1.896.13.634.433 1.218.877 1.688.47.443 1.054.747 1.687.878.633.132 1.29.084 1.897-.136.274.586.705 1.084 1.246 1.439.54.354 1.17.551 1.816.569.647-.016 1.276-.213 1.817-.567s.972-.854 1.245-1.44c.604.239 1.266.296 1.903.164.636-.132 1.22-.447 1.68-.907.46-.46.776-1.044.908-1.681s.075-1.299-.165-1.903c.586-.274 1.084-.705 1.439-1.246.354-.54.551-1.17.569-1.816zM9.662 14.85l-3.429-3.428 1.293-1.302 2.072 2.072 4.4-4.794 1.347 1.246z"></path>
+                            </svg>
+                        </div>
+                        <div class="author-role">@berryverrine</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="testimonial-content testimonial-slide">
+                <div class="quote">&quot;</div>
+                <p class="testimonial-text">
+                    The verification process was simple, fast, and easy
+                    to follow. My account was back in my hands in minutes.
+                </p>
+                <div class="author">
+                    <img
+                        class="author-avatar"
+                        src="https://pbs.twimg.com/profile_images/1501230098409996292/Fl0hOymC_400x400.jpg"
+                        alt="Sahara Naru profile"
+                    >
+                    <div>
+                        <div class="author-name">
+                            Sahara Naru
+                            <svg class="verified-badge" viewBox="0 0 22 22" aria-label="Verified account" role="img">
+                                <path d="M20.396 11c-.018-.646-.215-1.275-.57-1.816-.354-.54-.852-.972-1.438-1.246.223-.607.27-1.264.14-1.897-.131-.634-.437-1.218-.882-1.687-.47-.445-1.053-.75-1.687-.882-.633-.13-1.29-.083-1.897.14-.273-.587-.704-1.086-1.245-1.44S11.647 1.62 11 1.604c-.646.017-1.273.213-1.813.568s-.969.854-1.24 1.44c-.608-.223-1.267-.272-1.902-.14-.635.13-1.22.436-1.69.882-.445.47-.749 1.055-.878 1.688-.13.633-.08 1.29.144 1.896-.587.274-1.087.705-1.443 1.245-.356.54-.555 1.17-.574 1.817.02.647.218 1.276.574 1.817.356.54.856.972 1.443 1.245-.224.606-.274 1.263-.144 1.896.13.634.433 1.218.877 1.688.47.443 1.054.747 1.687.878.633.132 1.29.084 1.897-.136.274.586.705 1.084 1.246 1.439.54.354 1.17.551 1.816.569.647-.016 1.276-.213 1.817-.567s.972-.854 1.245-1.44c.604.239 1.266.296 1.903.164.636-.132 1.22-.447 1.68-.907.46-.46.776-1.044.908-1.681s.075-1.299-.165-1.903c.586-.274 1.084-.705 1.439-1.246.354-.54.551-1.17.569-1.816zM9.662 14.85l-3.429-3.428 1.293-1.302 2.072 2.072 4.4-4.794 1.347 1.246z"></path>
+                            </svg>
+                        </div>
+                        <div class="author-role">@MikaPikaZo</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card-bottom">
+                <span class="carousel-dot is-active" data-slide="0">*</span>
+                <span class="carousel-dot" data-slide="1">*</span>
+                <span class="carousel-dot" data-slide="2">*</span>
+            </div>
+        </div>
+
+        <!-- CONTACT FORM -->
+        <section class="form-section">
+            <h1>Contact Us</h1>
+            <p class="form-description">
+                Please reach out to us and we will get back to you
+                as soon as possible.
+            </p>
+
+            <form id="contact-form" method="POST" action="{{ route('contact.store') }}">
+                @csrf
+                <div class="form-group">
+                    <label for="email">Email Address</label>
+                    <input type="email" id="email" name="email" value="{{ old('email') }}" placeholder="you@example.com" required>
+                    @error('email')<small class="form-error">{{ $message }}</small>@enderror
+                </div>
+
+                <div class="form-group">
+                    <label for="username">X Username</label>
+                    <div class="username-field">
+                        <input
+                            type="text"
+                            id="username"
+                            name="username"
+                            value="{{ old('username') }}"
+                            placeholder="@username"
+                            autocomplete="off"
+                            role="combobox"
+                            aria-autocomplete="list"
+                            aria-controls="username-suggestions"
+                            aria-expanded="false"
+                            required
+                        >
+                        @error('username')<small class="form-error">{{ $message }}</small>@enderror
+                        <ul class="suggestions" id="username-suggestions" role="listbox"></ul>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="message">Message</label>
+                    <textarea id="message" name="message" placeholder="Describe your issue..." required>{{ old('message') }}</textarea>
+                    @error('message')<small class="form-error">{{ $message }}</small>@enderror
+                </div>
+
+                <button type="submit" class="submit-btn">Submit</button>
+                <button type="button" class="back-btn" onclick="history.back()">Back</button>
+            </form>
+        </section>
+
+    </div>
+</main>
+
+<script>
+    const usernameInput = document.getElementById('username');
+    const suggestionList = document.getElementById('username-suggestions');
+    let activeSuggestion = -1;
+
+    function renderSuggestions() {
+        const typedValue = usernameInput.value.trim().replace(/^@/, '');
+        const safeValue = typedValue.replace(/[^a-zA-Z0-9_]/g, '').slice(0, 20);
+        const handle = safeValue ? `@${safeValue}` : '';
+        const displayName = safeValue
+            ? safeValue.replace(/[_-]+/g, ' ').replace(/\b\w/g, letter => letter.toUpperCase())
+            : '';
+        const initials = safeValue.slice(0, 2).toUpperCase();
+
+        suggestionList.innerHTML = handle
+            ? `<li><button type="button" class="suggestion" role="option" data-handle="${handle}">
+                <span class="suggestion-avatar" aria-hidden="true">${initials}</span>
+                <span class="suggestion-copy">
+                    <span class="suggestion-name">${displayName}</span>
+                    <span class="suggestion-handle">${handle}</span>
+                </span>
+            </button></li>`
+            : '';
+
+        activeSuggestion = -1;
+        const isVisible = Boolean(handle);
+        suggestionList.classList.toggle('is-visible', isVisible);
+        usernameInput.setAttribute('aria-expanded', String(isVisible));
+    }
+
+    function chooseSuggestion() {
+        const suggestion = suggestionList.querySelector('.suggestion');
+        if (!suggestion) return;
+
+        usernameInput.value = suggestion.dataset.handle;
+        suggestionList.classList.remove('is-visible');
+        usernameInput.setAttribute('aria-expanded', 'false');
+        usernameInput.focus();
+    }
+
+    usernameInput.addEventListener('input', renderSuggestions);
+
+    usernameInput.addEventListener('keydown', event => {
+        const suggestions = suggestionList.querySelectorAll('.suggestion');
+        if (!suggestions.length) return;
+
+        if (event.key === 'ArrowDown' || event.key === 'ArrowUp') {
+            event.preventDefault();
+            activeSuggestion = event.key === 'ArrowDown'
+                ? (activeSuggestion + 1) % suggestions.length
+                : (activeSuggestion - 1 + suggestions.length) % suggestions.length;
+            suggestions.forEach((suggestion, index) => {
+                suggestion.classList.toggle('is-active', index === activeSuggestion);
+            });
+        }
+
+        if (event.key === 'Enter' && activeSuggestion >= 0) {
+            event.preventDefault();
+            chooseSuggestion(activeSuggestion);
+        }
+
+        if (event.key === 'Escape') {
+            suggestionList.classList.remove('is-visible');
+            usernameInput.setAttribute('aria-expanded', 'false');
+        }
+    });
+
+    suggestionList.addEventListener('click', event => {
+        const suggestion = event.target.closest('.suggestion');
+        if (suggestion) chooseSuggestion();
+    });
+
+    const testimonial = document.querySelector('.testimonial');
+    const testimonialSlides = testimonial.querySelectorAll('.testimonial-slide');
+    const carouselDots = testimonial.querySelectorAll('.carousel-dot');
+    let currentSlide = 0;
+    let carouselTimer;
+
+    function showTestimonial(index) {
+        currentSlide = (index + testimonialSlides.length) % testimonialSlides.length;
+        testimonialSlides.forEach((slide, slideIndex) => {
+            slide.classList.toggle('is-active', slideIndex === currentSlide);
+        });
+        carouselDots.forEach((dot, dotIndex) => {
+            dot.classList.toggle('is-active', dotIndex === currentSlide);
+        });
+    }
+
+    function startCarousel() {
+        clearInterval(carouselTimer);
+        carouselTimer = setInterval(() => showTestimonial(currentSlide + 1), 4000);
+    }
+
+    carouselDots.forEach(dot => {
+        dot.addEventListener('click', () => {
+            showTestimonial(Number(dot.dataset.slide));
+            startCarousel();
+        });
+    });
+
+    testimonial.addEventListener('mouseenter', () => clearInterval(carouselTimer));
+    testimonial.addEventListener('mouseleave', startCarousel);
+    startCarousel();
+
+</script>
+</html>
